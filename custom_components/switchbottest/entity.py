@@ -9,15 +9,15 @@ from homeassistant.helpers.entity import DeviceInfo, Entity
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import MANUFACTURER
-from .coordinator import SwitchbotDataUpdateCoordinator
+from .coordinator import SwitchbottestDataUpdateCoordinator
 
 
-class SwitchbotEntity(CoordinatorEntity[SwitchbotDataUpdateCoordinator], Entity):
+class SwitchbottestEntity(CoordinatorEntity[SwitchbottestDataUpdateCoordinator], Entity):
     """Generic entity encapsulating common features of Switchbot device."""
 
     def __init__(
         self,
-        coordinator: SwitchbotDataUpdateCoordinator,
+        coordinator: SwitchbottestDataUpdateCoordinator,
         idx: str | None,
         mac: str,
         name: str,

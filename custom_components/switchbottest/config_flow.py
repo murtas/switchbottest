@@ -1,4 +1,4 @@
-"""Config flow for Switchbot."""
+"""Config flow for Switchbottest."""
 from __future__ import annotations
 
 import logging
@@ -39,7 +39,7 @@ async def _btle_connect() -> dict:
     return switchbot_devices
 
 
-class SwitchbotConfigFlow(ConfigFlow, domain=DOMAIN):
+class SwitchbottestConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Switchbot."""
 
     VERSION = 1
@@ -48,6 +48,8 @@ class SwitchbotConfigFlow(ConfigFlow, domain=DOMAIN):
         """Try to discover nearby Switchbot devices."""
         # asyncio.lock prevents btle adapter exceptions if there are multiple calls to this method.
         # store asyncio.lock in hass data if not present.
+
+        _LOGGER.info("Loading btle devices")
         if DOMAIN not in self.hass.data:
             self.hass.data.setdefault(DOMAIN, {})
 
@@ -60,9 +62,9 @@ class SwitchbotConfigFlow(ConfigFlow, domain=DOMAIN):
     @callback
     def async_get_options_flow(
         config_entry: ConfigEntry,
-    ) -> SwitchbotOptionsFlowHandler:
+    ) -> SwitchbottestOptionsFlowHandler:
         """Get the options flow for this handler."""
-        return SwitchbotOptionsFlowHandler(config_entry)
+        return SwitchbottestOptionsFlowHandler(config_entry)
 
     def __init__(self):
         """Initialize the config flow."""
@@ -125,7 +127,7 @@ class SwitchbotConfigFlow(ConfigFlow, domain=DOMAIN):
         )
 
 
-class SwitchbotOptionsFlowHandler(OptionsFlow):
+class SwitchbottestOptionsFlowHandler(OptionsFlow):
     """Handle Switchbot options."""
 
     def __init__(self, config_entry: ConfigEntry) -> None:
@@ -135,7 +137,7 @@ class SwitchbotOptionsFlowHandler(OptionsFlow):
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
-        """Manage Switchbot options."""
+        """Manage Switchbottest options."""
         if user_input is not None:
             # Update common entity options for all other entities.
             for entry in self.hass.config_entries.async_entries(DOMAIN):

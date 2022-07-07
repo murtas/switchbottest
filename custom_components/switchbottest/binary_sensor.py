@@ -13,8 +13,8 @@ from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DATA_COORDINATOR, DOMAIN
-from .coordinator import SwitchbotDataUpdateCoordinator
-from .entity import SwitchbotEntity
+from .coordinator import SwitchbottestDataUpdateCoordinator
+from .entity import SwitchbottestEntity
 
 PARALLEL_UPDATES = 1
 
@@ -29,8 +29,8 @@ BINARY_SENSOR_TYPES: dict[str, BinarySensorEntityDescription] = {
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    """Set up Switchbot curtain based on a config entry."""
-    coordinator: SwitchbotDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
+    """Set up Switchbottest curtain based on a config entry."""
+    coordinator: SwitchbottestDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
         DATA_COORDINATOR
     ]
 
@@ -39,7 +39,7 @@ async def async_setup_entry(
 
     async_add_entities(
         [
-            SwitchBotBinarySensor(
+            SwitchBotTestBinarySensor(
                 coordinator,
                 entry.unique_id,
                 binary_sensor,
@@ -52,18 +52,18 @@ async def async_setup_entry(
     )
 
 
-class SwitchBotBinarySensor(SwitchbotEntity, BinarySensorEntity):
-    """Representation of a Switchbot binary sensor."""
+class SwitchBotTestBinarySensor(SwitchbottestEntity, BinarySensorEntity):
+    """Representation of a Switchbottest binary sensor."""
 
     def __init__(
         self,
-        coordinator: SwitchbotDataUpdateCoordinator,
+        coordinator: SwitchbottestDataUpdateCoordinator,
         idx: str | None,
         binary_sensor: str,
         mac: str,
         switchbot_name: str,
     ) -> None:
-        """Initialize the Switchbot sensor."""
+        """Initialize the Switchbottest sensor."""
         super().__init__(coordinator, idx, mac, name=switchbot_name)
         self._sensor = binary_sensor
         self._attr_unique_id = f"{idx}-{binary_sensor}"

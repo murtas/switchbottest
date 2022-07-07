@@ -1,4 +1,4 @@
-"""Support for Switchbot devices."""
+"""Support for Switchbottest devices."""
 
 import switchbot
 
@@ -22,7 +22,7 @@ from .const import (
     DEFAULT_TIME_BETWEEN_UPDATE_COMMAND,
     DOMAIN,
 )
-from .coordinator import SwitchbotDataUpdateCoordinator
+from .coordinator import SwitchbottestDataUpdateCoordinator
 
 PLATFORMS_BY_TYPE = {
     ATTR_BOT: [Platform.SWITCH, Platform.SENSOR],
@@ -32,7 +32,7 @@ PLATFORMS_BY_TYPE = {
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Switchbot from a config entry."""
+    """Set up Switchbottest from a config entry."""
     hass.data.setdefault(DOMAIN, {})
 
     if not entry.options:
@@ -46,7 +46,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.config_entries.async_update_entry(entry, options=options)
 
     # Use same coordinator instance for all entities.
-    # Uses BTLE advertisement data, all Switchbot devices in range is stored here.
+    # Uses BTLE advertisement data, all Switchbottest devices in range is stored here.
     if DATA_COORDINATOR not in hass.data[DOMAIN]:
 
         if COMMON_OPTIONS not in hass.data[DOMAIN]:
@@ -57,7 +57,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ]
 
         # Store api in coordinator.
-        coordinator = SwitchbotDataUpdateCoordinator(
+        coordinator = SwitchbottestDataUpdateCoordinator(
             hass,
             update_interval=hass.data[DOMAIN][COMMON_OPTIONS][
                 CONF_TIME_BETWEEN_UPDATE_COMMAND

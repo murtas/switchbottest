@@ -21,8 +21,8 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.restore_state import RestoreEntity
 
 from .const import CONF_RETRY_COUNT, DATA_COORDINATOR, DOMAIN
-from .coordinator import SwitchbotDataUpdateCoordinator
-from .entity import SwitchbotEntity
+from .coordinator import SwitchbottestDataUpdateCoordinator
+from .entity import SwitchbottestEntity
 
 # Initialize the logger
 _LOGGER = logging.getLogger(__name__)
@@ -32,8 +32,8 @@ PARALLEL_UPDATES = 1
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    """Set up Switchbot curtain based on a config entry."""
-    coordinator: SwitchbotDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
+    """Set up Switchbottest curtain based on a config entry."""
+    coordinator: SwitchbottestDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
         DATA_COORDINATOR
     ]
 
@@ -57,8 +57,8 @@ async def async_setup_entry(
     )
 
 
-class SwitchBotCurtainEntity(SwitchbotEntity, CoverEntity, RestoreEntity):
-    """Representation of a Switchbot."""
+class SwitchBotCurtainEntity(SwitchbottestEntity, CoverEntity, RestoreEntity):
+    """Representation of a Switchbottest."""
 
     _attr_device_class = CoverDeviceClass.CURTAIN
     _attr_supported_features = (
@@ -71,13 +71,13 @@ class SwitchBotCurtainEntity(SwitchbotEntity, CoverEntity, RestoreEntity):
 
     def __init__(
         self,
-        coordinator: SwitchbotDataUpdateCoordinator,
+        coordinator: SwitchbottestDataUpdateCoordinator,
         idx: str | None,
         mac: str,
         name: str,
         device: SwitchbotCurtain,
     ) -> None:
-        """Initialize the Switchbot."""
+        """Initialize the Switchbottest."""
         super().__init__(coordinator, idx, mac, name)
         self._attr_unique_id = idx
         self._attr_is_closed = None
@@ -97,21 +97,21 @@ class SwitchBotCurtainEntity(SwitchbotEntity, CoverEntity, RestoreEntity):
     async def async_open_cover(self, **kwargs: Any) -> None:
         """Open the curtain."""
 
-        _LOGGER.debug("Switchbot to open curtain %s", self._mac)
+        _LOGGER.debug("Switchbottest to open curtain %s", self._mac)
         self._last_run_success = bool(await self._device.open())
         self.async_write_ha_state()
 
     async def async_close_cover(self, **kwargs: Any) -> None:
         """Close the curtain."""
 
-        _LOGGER.debug("Switchbot to close the curtain %s", self._mac)
+        _LOGGER.debug("Switchbottest to close the curtain %s", self._mac)
         self._last_run_success = bool(await self._device.close())
         self.async_write_ha_state()
 
     async def async_stop_cover(self, **kwargs: Any) -> None:
         """Stop the moving of this device."""
 
-        _LOGGER.debug("Switchbot to stop %s", self._mac)
+        _LOGGER.debug("Switchbottest to stop %s", self._mac)
         self._last_run_success = bool(await self._device.stop())
         self.async_write_ha_state()
 
@@ -119,7 +119,7 @@ class SwitchBotCurtainEntity(SwitchbotEntity, CoverEntity, RestoreEntity):
         """Move the cover shutter to a specific position."""
         position = kwargs.get(ATTR_POSITION)
 
-        _LOGGER.debug("Switchbot to move at %d %s", position, self._mac)
+        _LOGGER.debug("Switchbottest to move at %d %s", position, self._mac)
         self._last_run_success = bool(await self._device.set_position(position))
         self.async_write_ha_state()
 

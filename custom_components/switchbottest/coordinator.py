@@ -14,7 +14,7 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-class SwitchbotDataUpdateCoordinator(DataUpdateCoordinator):
+class SwitchbottestDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching switchbot data."""
 
     def __init__(

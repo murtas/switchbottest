@@ -1,5 +1,5 @@
 """Constants for the switchbot integration."""
-DOMAIN = "switchbot"
+DOMAIN = "switchbottest"
 MANUFACTURER = "switchbot"
 
 # Config Attributes

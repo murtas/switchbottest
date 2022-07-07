@@ -12,6 +12,7 @@ from homeassistant.const import (
     CONF_NAME,
     PERCENTAGE,
     SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
+    TEMP_CELSIUS,
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import PlatformNotReady
@@ -19,8 +20,8 @@ from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DATA_COORDINATOR, DOMAIN
-from .coordinator import SwitchbotDataUpdateCoordinator
-from .entity import SwitchbotEntity
+from .coordinator import SwitchbottestDataUpdateCoordinator
+from .entity import SwitchbottestEntity
 
 PARALLEL_UPDATES = 1
 
@@ -48,9 +49,9 @@ SENSOR_TYPES: dict[str, SensorEntityDescription] = {
         native_unit_of_measurement=PERCENTAGE,
         device_class=SensorDeviceClass.HUMIDITY,
     ),
-    "temp": SensorEntityDescription(
+    "temperature_celsius": SensorEntityDescription(
         key="temperature",
-        native_unit_of_measurement=TEMP_FAHRENHEIT,
+        native_unit_of_measurement=TEMP_CELSIUS,
         device_class=SensorDeviceClass.TEMPERATURE,
     ),
 }
@@ -69,20 +70,26 @@ async def async_setup_entry(
 
     async_add_entities(
         [
-            SwitchBotSensor(
+            SwitchBottestSensor(
                 coordinator,
                 entry.unique_id,
                 sensor,
                 entry.data[CONF_MAC],
                 entry.data[CONF_NAME],
             )
-            for sensor in coordinator.data[entry.unique_id]["data"]
+            for sensor in flatten_objects(coordinator.data[entry.unique_id]["data"])
             if sensor in SENSOR_TYPES
         ]
     )
 
+def flatten_objects(sensors):
+    """Deconstruct pySwitchBot temp object with C/F readings into a flatten structure."""
+    if 'temp' in sensors:
+        sensors['temperature_celsius'] = sensors['temp']['c']
 
-class SwitchBotSensor(SwitchbotEntity, SensorEntity):
+    return sensors
+
+class SwitchBottestSensor(SwitchbottestEntity, SensorEntity):
     """Representation of a Switchbot sensor."""
 
     def __init__(
