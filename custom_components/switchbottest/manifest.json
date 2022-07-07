@@ -1,10 +1,9 @@
 {
   "domain": "switchbottest",
-  "name": "SwitchBotTest",
+  "name": "SwitchBot Test",
   "documentation": "https://www.home-assistant.io/integrations/switchbot",
   "requirements": ["PySwitchbot==0.14.0"],
   "config_flow": true,
-  "codeowners": ["@danielhiversen", "@RenierM26"],
-  "iot_class": "local_polling",
-  "loggers": ["switchbottest"]
+  "codeowners": [],
+  "version": "1.0.0"
 }
