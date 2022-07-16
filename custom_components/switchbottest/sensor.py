@@ -110,4 +110,4 @@ class SwitchBottestSensor(SwitchbottestEntity, SensorEntity):
     @property
     def native_value(self) -> str:
         """Return the state of the sensor."""
-        return self.data["data"][self._sensor]
+        return flatten_objects(self.data["data"])[self._sensor]
